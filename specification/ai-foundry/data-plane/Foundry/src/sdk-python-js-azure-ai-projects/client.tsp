@@ -26,6 +26,7 @@ import "../toolboxes/routes.tsp";
 import "../skills/routes.tsp";
 import "../agents-session-files/routes.tsp";
 import "../data_generation_jobs/routes.tsp";
+import "../jobs/routes.tsp";
 //import "../evaluation-suites/routes.tsp";
 import "../agents-optimization/routes.tsp";
 
@@ -511,3 +512,20 @@ model AIProjectClientOptions {
   },
   "python"
 );
+
+// --------------------------------------------------------------------------------
+// Jobs (Foundry training jobs) sub-client
+// --------------------------------------------------------------------------------
+@@clientName(Jobs.get, "get", "python");
+@@clientName(Jobs.list, "list", "python");
+@@clientName(Jobs.createOrUpdate, "create_or_update", "python");
+@@clientName(Jobs.beginDelete, "begin_delete", "python");
+@@clientName(Jobs.beginCancel, "begin_cancel", "python");
+
+// Run-history/artifact operations are not part of the public SDK surface.
+// See ADO 5423549 Q5 - these are candidates for removal from the spec entirely.
+@@access(Jobs.showServices, Access.internal);
+@@access(Jobs.getRunDetails, Access.internal);
+@@access(Jobs.getRun, Access.internal);
+@@access(Jobs.listArtifacts, Access.internal);
+@@access(Jobs.getArtifactContentInformation, Access.internal);
